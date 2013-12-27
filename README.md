@@ -1,4 +1,0 @@
-Telefon-Rehberi
-===============
-
-Telefon Rehberi
