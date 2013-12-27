@@ -1,0 +1,583 @@
+#include<stdio.h>//printf,scanf kütüphanesi
+#include<conio.h>// getch kütüphanesi
+#include<windows.h>//system kütüphanesi
+#include<cstdlib>//system("color 0A") kütüphanesi
+
+void kisiekleme();
+void kisigoruntule();
+void kisiguncelle();
+void kisisil();
+void kisiarama();
+void baska();
+
+FILE *rehber; //global değişken olarak dosyamızı açıyoruz(dosyamızın kod daki ismi)
+
+struct Telefonrehberi
+{
+	char ad[30];
+	char soyad[30];
+	char email[30];
+	char ev_no[30];
+	char is_no[30];
+	char cep_no[30];
+	char dtarih[30];
+}kisi;//struct değişkeni
+void main()//menü fonksiyonu
+{
+	int islem;
+	system("color 0A");//renk kodu
+
+	system("cls");//ekrandakini temizler
+
+	printf("\n_______@@@@@       *|*************************************|*       ");
+	printf("\n_______@    @      *|*                                   *|*       ");
+	printf("\n_______@    @      *|*    1-Kisi ekle                    *|*       ");
+	printf("\n_______@@@@@       *|*                                   *|*       ");
+	printf("\n_______@           *|*    2-Kisileri goruntule           *|*       ");
+	printf("\n_______@           *|*                                   *|*       ");
+	printf("\n_______            *|*    3-Kisi guncelle                *|*       ");
+	printf("\n_______@@@@@@      *|*                                   *|*       ");
+	printf("\n_______@    @      *|*    4-Kisi sil                     *|*       ");
+	printf("\n_______@@@@@@      *|*                                   *|*       ");
+	printf("\n_______@    @      *|*    5-Kisi arama                   *|*       ");
+	printf("\n_______            *|*                                   *|*       ");
+	printf("\n_______@ || @      *|*    6-Exit                         *|*       ");
+	printf("\n_______@    @      *|*                                   *|*       ");
+	printf("\n_______@@@@@@      *|*************************************|*    \n ");
+
+	printf("\n\nSeciminiz:");
+	scanf("%d",&islem);//
+
+	if (islem>=1 && islem<=6 )//secim 1 ile 6 arasında  veya 1 ile 6 ise iceri girsin..
+	{
+		switch (islem)
+		{
+		case 1:
+			kisiekleme();
+			break;
+		case 2:
+			kisigoruntule();
+			break;
+		case 3:
+			kisiguncelle();
+			break;
+		case 4:
+			kisisil();
+			break;
+		case 5:
+			kisiarama();
+			break;
+		case 6:
+			exit(1);
+			break;
+		}
+	}
+	else//secim 1-6 veya 1 ile 6 ya eşit değilese içeri girisin
+	{
+		system("CLS");
+		printf("Yanlis secim yaptiniz...");
+		Sleep(2000);
+		main();
+	}
+	getch();//Bir tuşa basmadan ekranı kapatmaz...
+}
+
+void kisiekleme()
+{
+	int denetci=0;
+	int i=0,a=0;
+	char yn;
+
+	rehber=fopen("trehber.txt","a");//Dosyamızı ekleme modunda trehber adında bir txt açıyoruz..
+
+	if(rehber==NULL)//Dosyamız null(0) değerinde ise içeri gir
+		printf("Dosyaya Erisilemedi...");
+	else//Dosyamız null değerine sahip değilse içeri gir
+	{
+		system("cls");
+		printf("\n-------------------------------------------------------------------------------\n");
+		printf("                              Kisi Eklemek");
+		printf("\n-------------------------------------------------------------------------------\n");
+
+		printf("Adi:");//Kullanıcıya eklemek istediği kisinin adını soruyoruz.
+		scanf("\n%s",&kisi.ad);//Kullanıcının eklemk istediği kisinin ismini girmesini sağlıyoruz.
+		fprintf(rehber,"%s ",kisi.ad);//Kullanıcının girdiği ismi dosyaya yazdırıyoruz.
+		printf("\nSoyadi:");
+		scanf("\n%s",&kisi.soyad);
+		fprintf(rehber,"%s ",kisi.soyad);
+		printf("\nDogum tarihi: ");
+		scanf("\n%s",&kisi.dtarih);
+		fprintf(rehber,"%s ",kisi.dtarih);
+		printf("\nE-mail: ");
+		scanf("\n%s",&kisi.email);
+		fprintf(rehber,"%s ",kisi.email);
+		printf("\nEv no:");
+		scanf("\n%s",&kisi.ev_no);
+		fprintf(rehber,"%s ",kisi.ev_no);
+
+		for(int i=0;i<50;i++)
+		{
+			if(('a'<=kisi.ev_no[i] && kisi.ev_no[i]<='z') || ('A'<=kisi.ev_no[i] && kisi.ev_no[i]<='Z'))
+			{
+				printf("HATA SAYI GIRMEDINIZ!!!");
+				Sleep(500);
+				system("cls");
+				main();
+			}
+
+		}
+
+		printf("\nIs no:");
+		scanf("\n%s",&kisi.is_no);
+		fprintf(rehber,"%s ",kisi.is_no);
+		for(int i=0;i<50;i++)
+		{
+			if(('a'<=kisi.is_no[i] && kisi.is_no[i]<='z') || ('A'<=kisi.is_no[i] && kisi.is_no[i]<='Z'))
+			{
+				printf("HATA SAYI GIRMEDINIZ!!!");
+				Sleep(500);
+				system("cls");
+				main();
+			}
+
+		}
+		printf("\nCep no:");
+		scanf("\n%s",&kisi.cep_no);
+		fprintf(rehber,"%s \n",kisi.cep_no);
+
+		for(int i=0;i<50;i++)
+		{
+			if(('a'<=kisi.cep_no[i] && kisi.cep_no[i]<='z') || ('A'<=kisi.cep_no[i] && kisi.cep_no[i]<='Z'))
+			{
+				printf("HATA SAYI GIRMEDINIZ!!!");
+				Sleep(500);
+				system("cls");
+				main();
+			}
+
+		}
+		fclose(rehber);//Dosyayı kapatırız..
+		system("cls");
+		for(;;)//sonsuz döngü yapıyoruz
+		{   printf("\n-------------------------------------------------------------------------------\n");
+		printf("                              Kisi Eklemek");
+		printf("\n-------------------------------------------------------------------------------");
+		printf("\nBaska bir kisi eklemek istiyor musunuz(e/h) ?");
+		scanf("%s",&yn);
+		if(yn=='e' )//kullanıcının soruya verdiği cevap "e" ise kisiekleme fonk yolluyoruz.
+			kisiekleme();
+		else if(yn=='h')//kullanıcının soruya verdiği cevap "h" ise menü fonk yoluuyoruz.
+			main();
+		else//Baska bir değer girmiş ise yanlis sescim yapmış olur 
+			printf("\n-------------------------------------------------------------------------------\n");
+		printf("                              Kisi Eklemek");
+		printf("\n-------------------------------------------------------------------------------");
+		printf("Yanlis bir secim girdiniz...");
+		Sleep(1500);//programın beklemesini(duraklatır) sağlar..
+		system("cls");
+		}
+	}
+}
+
+void kisigoruntule()
+{
+	char eh;
+
+	rehber=fopen("trehber.txt","r");//Dosyamızı okuma modunda trehber adında bir txt açıyoruz..
+	if(rehber==NULL)//Dosyamız null degerine eşir ise
+		printf("Dosyaya Erisilemedi...");
+	else	//Dosya null degerine eşit değilse
+	{
+		system("CLS");
+		printf("\n-------------------------------------------------------------------------------\n");
+		printf("                              Kisi Bilgileri");
+		printf("\n--------------------------------------------------------------------------------");
+		while (fscanf(rehber,"%s %s %s %s %s %s %s\n",&kisi.ad,&kisi.soyad,&kisi.dtarih,&kisi.email,&kisi.ev_no,&kisi.is_no,&kisi.cep_no)!=EOF)//Dosya sonuna gelene kadar dönderir.
+		{
+			printf("\nAd=           %s \nSoyad=        %s \nDogum tarihi= %s \nE-mail=       %s \nEv no=        %s \nis no=        %s \nCep no=       %s\n",kisi.ad,kisi.soyad,kisi.dtarih,kisi.email,kisi.ev_no,kisi.is_no,kisi.cep_no);
+			printf("--------------------------------------------------------------------------------");
+		}	
+		baska();
+	}
+	fclose(rehber);//Dosyayı kapatırız..
+}
+
+void kisiguncelle()
+{
+	int i=0,x=0,y=0;
+	char adguncel[30],eh=' ';
+	rehber=fopen("trehber.txt","r+");//Dosyamızı okuma-yazma modunda trehber adında bir txt açıyoruz.
+	struct Telefonrehberi yardimci[BUFSIZ];//Aşağıdaki aktarmaları yapmak için yedek bir struct açıyoruz.
+	if (rehber==NULL)
+	{
+		printf("Dosyaya Erişilemedi...");
+	}
+	else
+	{
+		system("CLS");
+		printf("\n-------------------------------------------------------------------------------\n");
+		printf("                              Kisi Guncelleme");
+		printf("\n--------------------------------------------------------------------------------\n");
+		printf("Guncellenecek kisinin adi:");
+		scanf("%s",&adguncel);
+		while (fscanf(rehber,"%s %s %s %s %s %s %s",&kisi.ad,&kisi.soyad,&kisi.dtarih,&kisi.email,&kisi.ev_no,&kisi.is_no,&kisi.cep_no)!=EOF)//Dosya sonuna gelene kadar dönderir.
+		{
+			if (strcmp(adguncel,kisi.ad)==0)//Kullanıcının girdiği ad ile dosyadaki kisi adı aynı ise içeri gir.
+			{
+				x=1;
+				y=1;
+				system("CLS");
+				printf("\n-------------------------------------------------------------------------------\n");
+				printf("                              Kisi Guncelleme");
+				printf("\n--------------------------------------------------------------------------------\n");
+				printf("Ad:");//Kullanıcıdan güncellemek istediği kişinin yeni ismini soruyoruz.
+				scanf("%s",yardimci[i].ad);//Kullanıcı güncellemek istediği kişiyi klavyeden girdiriyoruz.Girdiği ismi yedek struct ad kısmına alıyoruz.Dizi olark almamızın sebebi ilk girdiği isim yardimci struct ad sırayla alması 0,1,2 şeklinde (satır).
+				printf("\nSoyad:");
+				scanf("%s",yardimci[i].soyad);
+				printf("\nDogum tarihi:");
+				scanf("%s",yardimci[i].dtarih);
+				printf("\nE-mail:");
+				scanf("%s",yardimci[i].email);
+				printf("\nEv no:");
+				scanf("%s",yardimci[i].ev_no);
+				printf("\nis no:");
+				scanf("%s",yardimci[i].is_no);
+				printf("\nCep no:");
+				scanf("%s",yardimci[i].cep_no);
+			}
+			else
+			{
+				strcpy(yardimci[i].ad,kisi.ad);//sağdakini soldakine kopyalar(aktarır).aktardıklarımız aşğıda yazdırıyoruz.
+				strcpy(yardimci[i].soyad,kisi.soyad);
+				strcpy(yardimci[i].dtarih,kisi.dtarih);//dosyadaki kişilerin bilgileriniz yardimci olark tanımladığım başka bir struct aktarıyorum
+				strcpy(yardimci[i].email,kisi.email);
+				strcpy(yardimci[i].ev_no,kisi.ev_no);
+				strcpy(yardimci[i].is_no,kisi.is_no);
+				strcpy(yardimci[i].cep_no,kisi.cep_no);
+			}
+			i++;// yardimci struct'ını dizi şeklinde almıştık diziyi artırır.
+
+		}
+		printf("\n\n\n--------------------------------------------------------------------------------");
+
+		if (x==0)
+		{
+			system("CLS");
+			printf("\n-------------------------------------------------------------------------------\n");
+			printf("                              Kisi Guncelle");
+			printf("\n--------------------------------------------------------------------------------\n");
+			printf("Kayitli boyle bir kisi bulunamadi...");
+			Sleep(3000);
+		}
+		if (y==1)
+		{
+			Sleep(2000);
+
+			printf("\n%s adli kisi guncellenmistir...\n",adguncel);
+		}
+		fclose(rehber);
+		rehber=fopen("trehber.txt","w");//yeni bir dosya açıyoruz
+		for (int j = 0; j <i; j++)//yardimci struct'a atadığımız bilgileri dosyaya yazdırıyoruz
+		{
+			fprintf(rehber,"%s %s %s %s %s %s %s \n",yardimci[j].ad,yardimci[j].soyad,yardimci[j].dtarih,yardimci[j].email,yardimci[j].ev_no,yardimci[j].is_no,yardimci[j].cep_no);
+		}
+		fclose(rehber);
+		printf("\n--------------------------------------------------------------------------------");
+		baska();
+		main();
+	}
+}
+
+void kisisil()
+{ 
+	int i=0,x=0,y=0;
+	char adsil[30],eh=' ';
+	rehber=fopen("trehber.txt","r+");
+	struct Telefonrehberi yardimci[BUFSIZ];
+	if (rehber==NULL)
+	{
+		printf("Dosyaya Erişilemedi...");
+	}
+	else
+	{
+		system("CLS");
+		printf("\n-------------------------------------------------------------------------------\n");
+		printf("                              Kisi Sil");
+		printf("\n--------------------------------------------------------------------------------\n");
+		printf("Silinicek kisinin Adi:");
+		scanf("%s",&adsil);
+		while (fscanf(rehber,"%s %s %s %s %s %s %s",&kisi.ad,&kisi.soyad,&kisi.dtarih,&kisi.email,&kisi.ev_no,&kisi.is_no,&kisi.cep_no)!=EOF)
+		{
+			if (strcmp(kisi.ad,adsil)==0)
+			{
+				x=1;
+				y=1;
+				strcpy(yardimci[i].ad," ");
+				strcpy(yardimci[i].soyad," ");
+				strcpy(yardimci[i].dtarih," ");
+				strcpy(yardimci[i].email," ");
+				strcpy(yardimci[i].ev_no," ");
+				strcpy(yardimci[i].is_no," ");
+				strcpy(yardimci[i].cep_no," ");
+			}
+			else
+			{
+				strcpy(yardimci[i].ad,kisi.ad);
+				strcpy(yardimci[i].soyad,kisi.soyad);
+				strcpy(yardimci[i].dtarih,kisi.dtarih);
+				strcpy(yardimci[i].email,kisi.email);
+				strcpy(yardimci[i].ev_no,kisi.ev_no);
+				strcpy(yardimci[i].is_no,kisi.is_no);
+				strcpy(yardimci[i].cep_no,kisi.cep_no);
+			}
+			i++;
+		}
+		printf("\n--------------------------------------------------------------------------------");
+
+		if (x==0)
+		{
+			system("CLS");
+			printf("\n-------------------------------------------------------------------------------\n");
+			printf("                      Kisi Sil");
+			printf("\n--------------------------------------------------------------------------------\n");
+			printf("\n\nKayitli boyle bir kisi bulunamadi...");
+			Sleep(2000);
+			printf("\n--------------------------------------------------------------------------------");
+
+			baska();
+		}
+
+		for (;;)
+		{
+			char eh;
+			if(y==1)
+			{
+				printf("\n%s adli kisiyi silmek istediginize emin misiniz(e/h)?...",adsil);
+				scanf("%s",&eh);
+				if (eh=='e')
+				{
+					printf("\n--------------------------------------------------------------------------------\n");
+					printf("%s adli kisi silinmistir...",adsil);
+					Sleep(2000);
+					break;
+				}
+				else
+					main();
+			}
+		}
+		fclose(rehber);
+		rehber=fopen("trehber.txt","w");
+		for (int j = 0; j <i; j++)
+		{
+			fprintf(rehber,"%s %s %s %s %s %s %s \n",yardimci[j].ad,yardimci[j].soyad,yardimci[j].dtarih,yardimci[j].email,yardimci[j].ev_no,yardimci[j].is_no,yardimci[j].cep_no);
+		}
+		fclose(rehber);
+
+		printf("\n--------------------------------------------------------------------------------");
+		baska();
+		main();
+	}
+}
+void kisiarama()
+{
+	char adarama[30],eh= ' ';
+	int yardimci=0,carama;
+	system("CLS");
+	printf("\n-------------------------------------------------------------------------------\n");
+	printf("                              Kisi Arama");
+	printf("\n--------------------------------------------------------------------------------");
+	printf("\n1-Ad'a gore arama(1):");
+	printf("\n\n2-Soyad'a gore arama(2):");
+	printf("\n\n3-E-mail'e gore arama(3):");
+	printf("\n\n4-Dogum tarihine gore arama(4):\n");
+	scanf("%d",&carama);
+
+	if (carama==1 || carama==2 || carama==3 || carama==4 )
+	{
+		switch (carama)
+		{
+		case 1:
+
+			rehber=fopen("trehber.txt","r");
+			if (rehber==NULL)
+			{
+				printf("Dosyaya Erisilemiyor...");
+			}
+			else
+			{
+				system("CLS");
+				printf("\n-------------------------------------------------------------------------------\n");
+				printf("                              Kisi Arama");
+				printf("\n--------------------------------------------------------------------------------");
+				printf("\nAdi:");
+				scanf("%s",&adarama);
+				printf("\n-------------------------------------------------------------------------------\n");
+				system("CLS");
+				printf("                              Kisi Arama");
+				printf("\n--------------------------------------------------------------------------------");
+				while(fscanf(rehber,"%s %s %s %s %s %s %s",&kisi.ad,&kisi.soyad,&kisi.dtarih,&kisi.email,&kisi.ev_no,&kisi.is_no,&kisi.cep_no)!=EOF)
+				{	
+
+					if(strcmp(kisi.ad,adarama)==0)
+					{
+						yardimci=1;
+
+						printf("\nAdi=%s \n\nSoyadi=%s \n\nDogum tarihi=%s \n\nEmail=%s \n\nEv no=%s \n\nis no=%s \n\nCep no=%s\n\n",kisi.ad,kisi.soyad,kisi.dtarih,kisi.email,kisi.ev_no,kisi.is_no,kisi.cep_no);
+					}
+				}
+				if(yardimci==0)
+				{
+					printf("\nAradiginiz kisi bulunamadi.\n");
+					Sleep(2000);
+				}
+				printf("\n--------------------------------------------------------------------------------");
+				baska();
+			}
+			fclose(rehber);
+			break;
+
+
+		case 2:
+			char soyarama[30];
+			rehber=fopen("trehber.txt","r");
+			if (rehber==NULL)
+			{
+				printf("Dosyaya Erisilemiyor...");
+			}
+			else
+			{
+				system("CLS");
+				printf("\n-------------------------------------------------------------------------------\n");
+				printf("                              Kisi Arama");
+				printf("\n--------------------------------------------------------------------------------");
+				printf("\nSoyadi:");
+				scanf("%s",&soyarama);
+				system("CLS");
+				printf("\n-------------------------------------------------------------------------------\n");
+				printf("                              Kisi Arama");
+				printf("\n--------------------------------------------------------------------------------");
+				while(fscanf(rehber,"%s %s %s %s %s %s %s",&kisi.ad,&kisi.soyad,&kisi.dtarih,&kisi.email,&kisi.ev_no,&kisi.is_no,&kisi.cep_no)!=EOF)
+				{	
+
+					if(strcmp(kisi.soyad,soyarama)==0)
+					{
+						yardimci=1;
+
+						printf("\nAdi=%s \n\nSoyadi=%s \n\nDogum tarihi=%s \n\nEmail=%s \n\nEv no=%s \n\nis no=%s \n\nCep no=%s\n\n",kisi.ad,kisi.soyad,kisi.dtarih,kisi.email,kisi.ev_no,kisi.is_no,kisi.cep_no);
+					}
+
+				}
+				if(yardimci==0)
+				{
+					printf("\nAradiginiz kisi bulunamadi.\n");
+					Sleep(2000);
+				}
+
+				printf("\n--------------------------------------------------------------------------------");
+				baska();
+			}
+			fclose(rehber);
+			break;
+		case 3:
+			char mailarama[30];
+			rehber=fopen("trehber.txt","r");
+			if (rehber==NULL)
+			{
+				printf("Dosyaya Erisilemiyor...");
+			}
+			else
+			{
+				system("CLS");
+				printf("\n-------------------------------------------------------------------------------\n");
+				printf("                              Kisi Arama");
+				printf("\n--------------------------------------------------------------------------------");
+				printf("\nE-mail:");
+				scanf("%s",&mailarama);
+				system("CLS");
+				printf("\n-------------------------------------------------------------------------------\n");
+				printf("                              Kisi Arama");
+				printf("\n--------------------------------------------------------------------------------");
+				while(fscanf(rehber,"%s %s %s %s %s %s %s",&kisi.ad,&kisi.soyad,&kisi.dtarih,&kisi.email,&kisi.ev_no,&kisi.is_no,&kisi.cep_no)!=EOF)
+				{	
+
+					if(strcmp(kisi.email,mailarama)==0)
+					{
+						yardimci=1;
+
+						printf("\nAdi=%s \n\nSoyadi=%s \n\nDogum tarihi=%s \n\nEmail=%s \n\nEv no=%s \n\nis no=%s \n\nCep no=%s\n\n",kisi.ad,kisi.soyad,kisi.dtarih,kisi.email,kisi.ev_no,kisi.is_no,kisi.cep_no);
+					}
+				}
+				if(yardimci==0)
+				{
+					printf("\nAradiginiz kisi bulunamadi.\n");
+					Sleep(2000);
+				}
+				printf("\n--------------------------------------------------------------------------------");
+				baska();
+			}
+			fclose(rehber);
+			break;
+		case 4:
+			char dtariharama[30];
+			rehber=fopen("trehber.txt","r");
+			if (rehber==NULL)
+			{
+				printf("Dosyaya Erisilemiyor...");
+			}
+			else
+			{
+				system("CLS");
+				printf("\n-------------------------------------------------------------------------------\n");
+				printf("                              Kisi Arama");
+				printf("\n--------------------------------------------------------------------------------");
+				printf("\nDogum tarihi:");
+				scanf("%s",&dtariharama);
+				system("CLS");
+				printf("\n-------------------------------------------------------------------------------\n");
+				printf("                              Kisi Arama");
+				printf("\n--------------------------------------------------------------------------------");
+				while(fscanf(rehber,"%s %s %s %s %s %s %s",&kisi.ad,&kisi.soyad,&kisi.dtarih,&kisi.email,&kisi.ev_no,&kisi.is_no,&kisi.cep_no)!=EOF)
+				{	
+					if(strcmp(kisi.dtarih,dtariharama)==0)
+					{
+						yardimci=1;
+						printf("\nAdi=%s \n\nSoyadi=%s \n\nDogum tarihi=%s \n\nEmail=%s \n\nEv no=%s \n\nis no=%s \n\nCep no=%s\n\n",kisi.ad,kisi.soyad,kisi.dtarih,kisi.email,kisi.ev_no,kisi.is_no,kisi.cep_no);
+					}
+				}
+				if(yardimci==0)
+				{
+					printf("\nAradiginiz kisi bulunamadi.\n");
+					Sleep(2000);
+				}
+				printf("\n--------------------------------------------------------------------------------");
+				baska();
+			}
+			fclose(rehber);
+			break;
+		}
+	}
+	else
+	{
+		printf("Yanlis secim yaptiniz...");
+		Sleep(2000);
+		kisiarama();
+	}
+}
+
+void baska()
+{
+	char eh=' ';
+	Sleep(2000);
+	printf("\n\n\n\nBaska bir islem yapmak istiyor musunuz(e/h)? \n");
+	scanf("%s",&eh);
+	if (eh=='e')
+	{
+		main();
+	}
+	else if(eh=='h')
+	{
+		exit(1);
+	}
+	else
+		printf("Yanlis bir secim girdiniz...");
+}
